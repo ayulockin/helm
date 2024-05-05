@@ -1,5 +1,3 @@
-import csv
-import os
 from typing import Dict, List
 
 import datasets
@@ -81,7 +79,7 @@ subject_translations_de = {
 }
 
 
-class MMLUScenarioMultiLingual(Scenario):
+class MMLUScenarioMultilingual(Scenario):
     """
     The Massive Multitask Language Understanding benchmark from this paper:
 

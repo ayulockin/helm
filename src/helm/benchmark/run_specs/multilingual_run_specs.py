@@ -14,7 +14,7 @@ from helm.benchmark.scenarios.mmlu_scenario_multilingual import (
 @run_spec_function("mmlu_multilingual")
 def get_mmlu_spec(subject: str, language: str, method: str = ADAPT_MULTIPLE_CHOICE_JOINT) -> RunSpec:
     scenario_spec = ScenarioSpec(
-        class_name="helm.benchmark.scenarios.mmlu_scenario_multilingual.MMLUScenarioMultiLingual",
+        class_name="helm.benchmark.scenarios.mmlu_scenario_multilingual.MMLUScenarioMultilingual",
         args={"subject": subject, "language": language},
     )
 
