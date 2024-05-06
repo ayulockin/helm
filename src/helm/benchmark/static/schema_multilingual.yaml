@@ -643,6 +643,7 @@ run_groups:
     subgroups:
       - mmlu_multilingual
       - hellaswag_multilingual
+      - arc_multilingual
       - mgsm
 
   - name: mmlu_multilingual
@@ -677,6 +678,24 @@ run_groups:
     taxonomy:
       task: question answering
       what: commonsense reasoning
+      who: University of Oregon
+      when: "2023"
+      language: Multilingual
+
+  - name: arc_multilingual
+    display_name: AI2 Reasoning Challenge (ARC)
+    short_display_name: ARC 
+    description: The AI2 Reasoning Challenge (ARC) benchmark for question answering [(Clark et al., 2018)](https://arxiv.org/abs/1803.05457). This is the multilingual version of the benchmark.
+    metric_groups:
+      - accuracy
+      - efficiency
+      - general_information
+    environment:
+      main_name: exact_match
+      main_split: test
+    taxonomy:
+      task: multiple-choice question answering
+      what: math, science, history, etc.
       who: University of Oregon
       when: "2023"
       language: Multilingual

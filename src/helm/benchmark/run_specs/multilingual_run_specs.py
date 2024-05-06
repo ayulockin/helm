@@ -22,6 +22,11 @@ from helm.benchmark.scenarios.hellaswag_scenario_multilingual import (
     INPUT_NOUNS,
     OUTPUT_NOUNS,
 )
+from helm.benchmark.scenarios.arc_scenario_multilingual import (
+    INSTRUCTIONS,
+    INPUT_NOUNS,
+    OUTPUT_NOUNS,
+)
 
 
 @run_spec_function("mmlu_multilingual")
@@ -68,6 +73,29 @@ def get_hellaswag_spec(language: str, method: str = ADAPT_MULTIPLE_CHOICE_JOINT)
         adapter_spec=adapter_spec,
         metric_specs=get_exact_match_metric_specs(),
         groups=["hellaswag_multilingual"],
+    )
+
+
+@run_spec_function("arc_multilingual")
+def get_arc_spec(language: str, method: str = ADAPT_MULTIPLE_CHOICE_JOINT) -> RunSpec:
+    scenario_spec = ScenarioSpec(
+        class_name="helm.benchmark.scenarios.arc_scenario_multilingual.ARCScenarioMultilingual",
+        args={"language": language},
+    )
+
+    adapter_spec = get_multiple_choice_adapter_spec(
+        method=method,
+        instructions=INSTRUCTIONS[language],
+        input_noun=INPUT_NOUNS[language],
+        output_noun=OUTPUT_NOUNS[language],
+    )
+
+    return RunSpec(
+        name=f"arc:language={language},method={method}",
+        scenario_spec=scenario_spec,
+        adapter_spec=adapter_spec,
+        metric_specs=get_exact_match_metric_specs(),
+        groups=["arc_multilingual"],
     )
 
 
