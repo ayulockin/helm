@@ -609,6 +609,7 @@ perturbations:
 metric_groups:
   - name: accuracy
     display_name: Accuracy
+    hide_win_rates: true
     metrics:
       - name: ${main_name}
         split: ${main_split}
@@ -641,10 +642,11 @@ run_groups:
     category: Multilingual scenarios
     subgroups:
       - mmlu_multilingual
+      - hellaswag_multilingual
 
   - name: mmlu_multilingual
     display_name: MMLU Multilingual (Massive Multitask Language Understanding)
-    short_display_name: MMLU Ml
+    short_display_name: MMLU
     description: The Massive Multitask Language Understanding (MMLU) benchmark for knowledge-intensive question answering across 57 domains [(Hendrycks et al., 2021)](https://arxiv.org/pdf/2009.03300.pdf). This is the multilingual version of the benchmark.
     metric_groups:
       - accuracy
@@ -656,6 +658,24 @@ run_groups:
     taxonomy:
       task: multiple-choice question answering
       what: math, science, history, etc.
-      who: various online sources
-      when: before 2021
+      who: University of Oregon
+      when: "2023"
+      language: Multilingual
+
+  - name: hellaswag_multilingual
+    display_name: Hellaswag Multilingual
+    short_display_name: Hellaswag
+    description: The HellaSwag benchmark for commonsense reasoning in question answering [(Zellers et al., 2019)](https://aclanthology.org/P19-1472/). This is the multilingual version of the benchmark.
+    metric_groups:
+      - accuracy
+      - efficiency
+      - general_information
+    environment:
+      main_name: exact_match
+      main_split: valid
+    taxonomy:
+      task: question answering
+      what: commonsense reasoning
+      who: University of Oregon
+      when: "2023"
       language: Multilingual
