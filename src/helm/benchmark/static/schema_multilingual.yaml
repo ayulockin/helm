@@ -609,7 +609,7 @@ perturbations:
 metric_groups:
   - name: accuracy
     display_name: Accuracy
-    hide_win_rates: true
+    # hide_win_rates: true
     metrics:
       - name: ${main_name}
         split: ${main_split}
@@ -634,6 +634,20 @@ metric_groups:
     - name: num_output_tokens
       split: ${main_split}
 
+  - name: classification_metrics
+    display_name: Classification metrics
+    metrics:
+      - name: classification_macro_f1
+        split: ${main_split}
+      - name: classification_micro_f1
+        split: ${main_split}
+
+  - name: calibration
+    display_name: Calibration
+    metrics:
+      - name: ece_10_bin
+        split: ${main_split}
+
 ############################################################
 run_groups:
   - name: multilingual_scenarios
@@ -645,6 +659,8 @@ run_groups:
       - hellaswag_multilingual
       - arc_multilingual
       - mgsm
+      - lextreme
+      - wmt_14
 
   - name: mmlu_multilingual
     display_name: MMLU Multilingual (Massive Multitask Language Understanding)
@@ -717,3 +733,32 @@ run_groups:
       who: "?"
       when: "?"
       language: Multilingual
+
+  - name: lextreme
+    display_name: LEXTREME
+    description: A Multilingual Legal Benchmark for Natural Language Understanding
+    metric_groups:
+      - accuracy
+      - calibration
+      - efficiency
+      - general_information
+    environment:
+      main_name: classification_macro_f1
+      main_split: test
+
+  - name: wmt_14
+    display_name: WMT 2014
+    description: WMT 2014 is a collection of machine translation datasets [(website)](https://www.statmt.org/wmt14/index.html).
+    metric_groups:
+      - accuracy
+      - efficiency
+      - general_information
+    environment:
+      main_name: bleu_4
+      main_split: test
+    taxonomy:
+      task: machine translation
+      what: multilingual sentences
+      who: Europarl, news, Common Crawl, etc.
+      when: before 2014
+      language: English, French, Czech, etc.
