@@ -136,7 +136,7 @@ class MMLUScenarioMultilingual(Scenario):
     description = "Massive Multitask Language Understanding in Multi lingual language"
     tags = ["knowledge", "multiple_choice"]
 
-    def __init__(self, subject: str, language: str = "de"):
+    def __init__(self, subject: str, language: str):
         super().__init__()
         self.subject: str = subject
         self.language: str = language

@@ -3,7 +3,7 @@ from typing import Dict, List
 import datasets
 
 from helm.common.hierarchical_logger import hlog
-from .scenario import Scenario, Instance, Reference, TRAIN_SPLIT, VALID_SPLIT, TEST_SPLIT, CORRECT_TAG, Input, Output
+from .scenario import Scenario, Instance, Reference, VALID_SPLIT, CORRECT_TAG, Input, Output
 
 
 INSTRUCTIONS = {

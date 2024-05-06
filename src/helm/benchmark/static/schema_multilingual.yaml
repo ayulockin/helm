@@ -643,6 +643,7 @@ run_groups:
     subgroups:
       - mmlu_multilingual
       - hellaswag_multilingual
+      - mgsm
 
   - name: mmlu_multilingual
     display_name: MMLU Multilingual (Massive Multitask Language Understanding)
@@ -678,4 +679,22 @@ run_groups:
       what: commonsense reasoning
       who: University of Oregon
       when: "2023"
+      language: Multilingual
+
+  - name: mgsm
+    display_name: Multilingual Grade School Math Benchmark (MGSM)
+    short_display_name: MGSM
+    description: The benchmark of grade-school math problems, proposed in the paper Language models are multilingual chain-of-thought reasoners.
+    metric_groups:
+      - accuracy
+      - efficiency
+      - general_information
+    environment:
+      main_name: final_number_exact_match
+      main_split: test
+    taxonomy:
+      task: numeric answer question answering
+      what: grade school math word problems in different languages
+      who: "?"
+      when: "?"
       language: Multilingual
