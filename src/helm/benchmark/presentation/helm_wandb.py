@@ -1,6 +1,7 @@
 import os
 import json
 import wandb
+import yaml
 import argparse
 import numpy as np
 import pandas as pd
@@ -85,7 +86,7 @@ def get_group_tables(base_path: str, group_name: str) -> Dict[str, Table]:
     return name_to_table
 
 
-def parse_accuracy_for_wandb(tables: Dict[str, Table]) -> pd.DataFrame:
+def parse_accuracy_for_wandb(tables: Dict[str, Table], model_dict: Dict) -> pd.DataFrame:
     """Parses the accuracy table for W&B."""
     accuracy_table = tables["Accuracy"]
     adapters: List[str] = accuracy_table.adapters
@@ -95,17 +96,33 @@ def parse_accuracy_for_wandb(tables: Dict[str, Table]) -> pd.DataFrame:
 
     default_pd_columns = ["Model", "Mean win rate"]
     pd_columns = default_pd_columns + [column.name for column in columns]
+    pd_columns = pd_columns + ["creator_organization_name", "access", "num_parameters", "release_date"]
 
     data = []
     for adapter, mean_win_rate, *column_values in zip(
         adapters, mean_win_rates_iterable, *[column.values for column in columns]
     ):
-        data.append([adapter, mean_win_rate] + column_values)
+        model_metadata = model_dict.get(adapter, {})
+        if model_metadata:
+            creator_organization_name = model_metadata.get("creator_organization_name", "NA")
+            access = model_metadata.get("access", "NA")
+            num_parameters = model_metadata.get("num_parameters", "NA")
+            release_date = model_metadata.get("release_date", "NA")
+            if release_date:
+                release_date = release_date.strftime("%Y-%m-%d")
+        else:
+            creator_organization_name = "NA"
+            access = "NA"
+            num_parameters = "NA"
+            release_date = "NA"
+        data.append(
+            [adapter, mean_win_rate] + column_values + [creator_organization_name, access, num_parameters, release_date]
+        )
     df = pd.DataFrame(data, columns=pd_columns)
     return df
 
 
-def parse_efficiency_for_wandb(tables: Dict[str, Table]) -> pd.DataFrame:
+def parse_efficiency_for_wandb(tables: Dict[str, Table], model_dict: Dict) -> pd.DataFrame:
     """Parses the efficiency table for W&B."""
     efficiency_table = tables["Efficiency"]
     adapters: List[str] = efficiency_table.adapters
@@ -115,11 +132,28 @@ def parse_efficiency_for_wandb(tables: Dict[str, Table]) -> pd.DataFrame:
 
     default_pd_columns = ["Model", "Mean win rate"]
     pd_columns = default_pd_columns + [column.name for column in columns]
+    pd_columns = pd_columns + ["creator_organization_name", "access", "num_parameters", "release_date"]
+
     data = []
     for adapter, mean_win_rate, *column_values in zip(
         adapters, mean_win_rates_iterable, *[column.values for column in columns]
     ):
-        data.append([adapter, mean_win_rate] + column_values)
+        model_metadata = model_dict.get(adapter, {})
+        if model_metadata:
+            creator_organization_name = model_metadata.get("creator_organization_name", "NA")
+            access = model_metadata.get("access", "NA")
+            num_parameters = model_metadata.get("num_parameters", "NA")
+            release_date = model_metadata.get("release_date", "NA")
+            if release_date:
+                release_date = release_date.strftime("%Y-%m-%d")
+        else:
+            creator_organization_name = "NA"
+            access = "NA"
+            num_parameters = "NA"
+            release_date = "NA"
+        data.append(
+            [adapter, mean_win_rate] + column_values + [creator_organization_name, access, num_parameters, release_date]
+        )
     df = pd.DataFrame(data, columns=pd_columns)
     return df
 
@@ -140,12 +174,21 @@ def main():
         hlog(f"ERROR: Could not find `groups` directory under {base_path}. Did you run `summarize.py` first?")
         return
 
+    model_metadata_path = "prod_env/model_metadata.yaml"
+    with open(model_metadata_path, "r") as f:
+        model_metadata = yaml.safe_load(f)["models"]
+
+    model_metadata_dict = {model["display_name"]: model for model in model_metadata}
+    print(model_metadata_dict.keys())
+
     run = wandb.init(entity="wandb", project="de-llm-leaderboard", job_type="helm_eval")
 
     tables = get_group_tables(base_path, "multilingual_scenarios")
 
-    accuracy_df = parse_accuracy_for_wandb(tables)
-    efficiency_df = parse_efficiency_for_wandb(tables)
+    accuracy_df = parse_accuracy_for_wandb(tables, model_metadata_dict)
+    print(accuracy_df)
+    efficiency_df = parse_efficiency_for_wandb(tables, model_metadata_dict)
+    print(efficiency_df)
 
     run.log(
         {"accuracy_table": wandb.Table(dataframe=accuracy_df), "efficiency_table": wandb.Table(dataframe=efficiency_df)}
