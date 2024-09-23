@@ -2,6 +2,172 @@
 
 ## [Upcoming]
 
+## [v0.5.3] - 2024-09-06
+
+### Breaking Changes
+
+- The `--models-to-run` flag in `helm-run` must now be set if a models run expander such as `models=text` is used (#2852)
+- The `--jquery` flag has been removed from `helm-server` because the legacy frontend is no longer supported (#2852)
+
+### Scenarios
+
+- Improve DecodingTrust scenario (#2734, #2600)
+- Add BHASA scenarios (#2648, #2914, #2913, #2937)
+- Add BHASA LINDSEA scenarios (#2694)
+- Change AIR-Bench main score to refusal rate (#2788, #2802, #2873)
+- Add EWoK scenario (#2812, #2850, #2882, #2897, #2899)
+- Add FinanceBench scenario (#2798)
+- Add XSTest Scenario (#2831)
+- Add AnthropicRedTeam scenario (#2830)
+- Add SimpleSafetyTests Scenario(#2828)
+- Add HarmBench Scenario (#2829, #2935)
+- Add BANKING77 scenario (#2947)
+- Change source dataset URL for Momentos scenario for VHELM (#2823)
+- Add RealWorldQA, EXAMS-V, and FairFace scenarios for VHELM (#2825)
+- Update Image2Struct scenarios (#2879, #2878, #2888, #2890, #2891, #2919, #2920)
+
+### Models
+
+- Add SambaLingo Thai models (#2747, #2757)
+- Add more Typhoon family models (#2745, #2768)
+- Add SeaLLM models (#2744)
+- Add OpenThaiGPT models (#2743)
+- Add SambaLingo-Thai-Base-70B and SambaLingo-Thai-Chat-70B (#2758, #2757, #2782)
+- Add Claude 3.5 Sonnet (20240620) (#2763)
+- Add multi-GPU support to HuggingFaceClient (#2762)
+- Add AI21 Jamba Instruct (#2766)
+- Add Gemma 2 and Gemma 2 Instruct models (#2796, #2862)
+- Deleted many deprecated models (#2668, #2814)
+- Deleted many deprecated window services (#2669)
+- Add Phi-3 models (#2815)
+- Switched AI21 models to use local tokenizer (#2775)
+- Add GPT-4o mini (#2827)
+- Add Mistral NeMo (#2826)
+- Add Llama 3.1 Instruct Turbo (#2835, #2840, #2844, #2880, #2898)
+- Add Mistral Large 2 (#2839)
+- Add Nemotron-4-Instruct (#2892, #2896, #2901)
+- Add GPT-4o (2024-08-06) (#2900)
+- Add Jamba 1.5 models (#2957)
+- Add Llama Guard 3 (#2968)
+
+### Frontend
+
+- Fix bug causing repeated renders and excessive CPU usage on some HELM landing pages (#2816)
+- Fix bug causing Predictions page to repeatedly download schema.json (#2847)
+- Fix spurious AbortError warnings in console logs (#2811)
+- Fix incorrect handling perturbations in run predictions frontend (#2950)
+
+### Framework
+
+- Support other reference prefixes in MultipleChoiceJointAdapter (#2809)
+- Add validation for --models-to-run (#2852)
+- Remove pyext from dependencies (#2921)
+- Make Perspective API dependencies optional (#2924)
+
+### Misc
+
+- Add additional instructions for more scenarios in `output_format_instructions` (#2789, #2821, #2822, #2824, #2902, #2906, #2952, #2963)
+- Allow the `output_format_instructions` run expander to add additional instructions as suffix (#2964)
+- Changelog messages are now in present tense rather than past tense, to align with Git commit message style
+- Leaderboard releases are no longer included in this changelog, and will be included in `LEADERBOARD_CHANGELOG.md` instead
+
+### Contributors
+
+Thank you to the following contributors for your work on this HELM release!
+
+- @andyzorigin
+- @benediktstroebl
+- @danielz02
+- @farzaank
+- @JosselinSomervilleRoberts
+- @percyliang
+- @potsawee
+- @raileymontalan
+- @SathvikNapa
+- @shenmishajing
+- @teetone
+- @weiqipedia
+- @yifanmai
+
+## [v0.5.2] - 2024-06-17
+
+### Scenarios
+
+- Updated VHELM scenarios for VLMs (#2719, #2684, #2685, #2641, #2691)
+- Updated Image2Struct scenarios (#2608, #2640, #2660, #2661)
+- Added Automatic GPT4V Evaluation for VLM Originality Evaluation
+- Added FinQA scenario (#2588)
+- Added AIR-Bench 2024 (#2698, #2706, #2710, #2712, #2713)
+- Fixed `entity_data_imputation` scenario breakage by mirroring source data files (#2750)
+
+### Models
+
+- Added google-cloud-aiplatform~=1.48 dependency requirement for Vertex AI client (#2628)
+- Fixed bug with Vertex AI client error handling (#2614)
+- Fixed bug with for Arctic tokenizer (#2615)
+- Added Qwen1.5 110B Chat (#2621)
+- Added TogetherCompletionClient (#2629)
+- Fixed bugs with Yi Chat and Llama 3 Chat on Together (#2636)
+- Added Optimum Intel (#2609, #2674)
+- Added GPT-4o model (#2649, #2656)
+- Added SEA-LION 7B and SEA-LION 7B Instruct (#2647) 
+- Added more Gemini 1.5 Flash and Pro versions (#2653, #2664, #2718, #2718)
+- Added Gemini 1.0 Pro 002 (#2664)
+- Added Command R and Command R+ models (#2548) 
+- Fixed GPT4V Evaluator Out of Option Range Issue (#2677)
+- Added OLMo 1.5 (#2671)
+- Added RekaClient (#2675)
+- Added PaliGemma (#2683)
+- Added Mistral 7B Instruct v0.1, v0.2 and v0.3 (#2665)
+- Switched most Together chat models to use the chat client (#2703, #2701, #2705)
+- Added MedLM model (#2696, #2709)
+- Added Typhoon v1.5 models (#2659)
+- Changed HuggingFaceClient to truncate end of text token (#2643)
+- Added Qwen2 Instruct (72B) (#2722)
+- Added Yi Large (#2723, #1731)
+- Added Sailor models (#2658)
+- Added BioMistral and Meditron (#2728)
+
+### Frontend
+
+- Miscellaneous improvements and bug fixes (#2618, #2617, #2616, #2651, #2667, #2724)
+
+### Framework
+
+- Removed `adapter_spec` from `schema_*.yaml` files (#2611)
+- Added support for annotators / LLM-as-judge (#2622, #2700)
+- Updated documentation (#2626, #2529, #2521)
+
+### Evaluation Results
+
+- [MMLU v1.2.0](https://crfm.stanford.edu/helm/mmlu/v1.2.0/)
+    - Added results for DBRX Instruct, DeepSeek LLM Chat (67B), Gemini 1.5 Pro (0409 preview), Mistral Small (2402), Mistral Large (2402), Arctic Instruct
+- [MMLU v1.3.0](https://crfm.stanford.edu/helm/mmlu/v1.3.0/)
+    - Added results for Gemini 1.5 Flash (0514 preview), GPT-4o (2024-05-13), Palmyra X V3 (72B)
+- [MMLU v1.4.0](https://crfm.stanford.edu/helm/mmlu/v1.4.0/)
+    - Added results for Yi Large (Preview), OLMo 1.7 (7B), Command R, Command R Plus, Gemini 1.5 Flash (001), Gemini 1.5 Pro (001), Mistral Instruct v0.3 (7B), GPT-4 Turbo (2024-04-09), Qwen1.5 Chat (110B), Qwen2 Instruct (72B)
+- [Image2Struct v1.0.0](https://crfm.stanford.edu/helm/image2struct/v1.0.0/)
+    - Initial release with Claude 3 Sonnet (20240229), Claude 3 Opus (20240229), Gemini 1.0 Pro Vision, Gemini 1.5 Pro (0409 preview),IDEFICS 2 (8B), IDEFICS-instruct (9B), IDEFICS-instruct (80B), LLaVA 1.5 (13B), LLaVA 1.6 (13B), GPT-4o (2024-05-13), GPT-4V (1106 preview), Qwen-VL Chat
+- [AIR-Bench v1.0.0](https://crfm.stanford.edu/helm/air-bench/v1.0.0/)
+    - Initial release with Claude 3 Haiku (20240307), Claude 3 Sonnet (20240229), Claude 3 Opus (20240229), Cohere Command R, Cohere Command R Plus, DBRX Instruct, DeepSeek LLM Chat (67B), Gemini 1.5 Pro (001, default safety), Gemini 1.5 Flash (001, default safety), Llama 3 Instruct (8B), Llama 3 Instruct (70B), Yi Chat (34B), Mistral Instruct v0.3 (7B), Mixtral Instruct (8x7B), Mixtral Instruct (8x22B), GPT-3.5 Turbo (0613), GPT-3.5 Turbo (1106), GPT-3.5 Turbo (0125), GPT-4 Turbo (2024-04-09), GPT-4o (2024-05-13), Qwen1.5 Chat (72B)
+
+### Contributors
+
+Thank you to the following contributors for your work on this HELM release!
+
+- @andyt-cohere
+- @bryanzhou008
+- @chiheem
+- @farzaank
+- @ImKeTT
+- @JosselinSomervilleRoberts
+- @NoushNabi
+- @percyliang
+- @raileymontalan
+- @shakatoday
+- @teetone
+- @yifanmai
+
 ## [v0.5.1] - 2024-05-06
 
 ### Scenarios
@@ -461,7 +627,9 @@ Thank you to the following contributors for your contributions to this HELM rele
 
 - Initial release
 
-[upcoming]: https://github.com/stanford-crfm/helm/compare/v0.5.1...HEAD
+[upcoming]: https://github.com/stanford-crfm/helm/compare/v0.5.3...HEAD
+[v0.5.3]: https://github.com/stanford-crfm/helm/releases/tag/v0.5.3
+[v0.5.2]: https://github.com/stanford-crfm/helm/releases/tag/v0.5.2
 [v0.5.1]: https://github.com/stanford-crfm/helm/releases/tag/v0.5.1
 [v0.5.0]: https://github.com/stanford-crfm/helm/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/stanford-crfm/helm/releases/tag/v0.4.0

@@ -12,8 +12,8 @@ from helm.common.tokenization_request import (
     TokenizationRequest,
     TokenizationRequestResult,
 )
-from helm.tokenizers.tokenizer import Tokenizer
 from .client import CachingClient, truncate_sequence, generate_uid_for_multimodal_prompt
+from helm.tokenizers.tokenizer import Tokenizer
 
 try:
     import openai
@@ -51,7 +51,7 @@ class OpenAIClient(CachingClient):
     def _is_chat_model_engine(self, model_engine: str) -> bool:
         if model_engine == "gpt-3.5-turbo-instruct":
             return False
-        elif model_engine.startswith("gpt-3.5") or model_engine.startswith("gpt-4"):
+        elif model_engine.startswith("gpt-3.5") or model_engine.startswith("gpt-4") or model_engine.startswith("o1"):
             return True
         return False
 
@@ -132,6 +132,7 @@ class OpenAIClient(CachingClient):
             content: Union[str, List[Union[str, Any]]]
             if request.multimodal_prompt is not None:
                 content = []
+                request.validate()
                 for media_object in request.multimodal_prompt.media_objects:
                     if media_object.is_type("image") and media_object.location:
                         from helm.common.images_utils import encode_base64
@@ -140,8 +141,6 @@ class OpenAIClient(CachingClient):
                         image_object: Dict[str, str] = {"url": f"data:image/jpeg;base64,{base64_image}"}
                         content.append({"type": "image_url", "image_url": image_object})
                     elif media_object.is_type(TEXT_TYPE):
-                        if media_object.text is None:
-                            raise ValueError("MediaObject of text type has missing text field value")
                         content.append({"type": media_object.type, "text": media_object.text})
                     else:
                         raise ValueError(f"Unrecognized MediaObject type {media_object.type}")
@@ -169,6 +168,21 @@ class OpenAIClient(CachingClient):
         # Fails with "body -> stop: none is not an allowed value" if None is passed.
         if is_vlm(request.model) and raw_request["stop"] is None:
             raw_request.pop("stop")
+
+        # Special handling for o1 models.
+        # Refer to the "Reasoning models" documentation further discussion of o1 model limitations:
+        # https://platform.openai.com/docs/guides/reasoning
+        if request.model_engine.startswith("o1"):
+            # Avoid error:
+            # "Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."  # noqa: E501
+            # Note that openai>=1.45 is needed for this
+            if raw_request["max_tokens"]:
+                raw_request["max_completion_tokens"] = raw_request["max_tokens"]
+                raw_request.pop("max_tokens")
+            # Avoid error:
+            # "Invalid type for 'stop': expected an unsupported value, but got null instead."
+            if raw_request["stop"] is None:
+                raw_request.pop("stop")
 
         def do_it() -> Dict[str, Any]:
             return self.client.chat.completions.create(**raw_request).model_dump(mode="json")
