@@ -106,7 +106,7 @@ def parse_accuracy_for_wandb(tables: Dict[str, Table], model_dict: Dict) -> pd.D
         if model_metadata:
             creator_organization_name = model_metadata.get("creator_organization_name", "NA")
             access = model_metadata.get("access", "NA")
-            num_parameters = model_metadata.get("num_parameters", "NA")
+            num_parameters = str(model_metadata.get("num_parameters", "NA"))
             release_date = model_metadata.get("release_date", "NA")
             if release_date:
                 release_date = release_date.strftime("%Y-%m-%d")
@@ -142,7 +142,7 @@ def parse_efficiency_for_wandb(tables: Dict[str, Table], model_dict: Dict) -> pd
         if model_metadata:
             creator_organization_name = model_metadata.get("creator_organization_name", "NA")
             access = model_metadata.get("access", "NA")
-            num_parameters = model_metadata.get("num_parameters", "NA")
+            num_parameters = str(model_metadata.get("num_parameters", "NA"))
             release_date = model_metadata.get("release_date", "NA")
             if release_date:
                 release_date = release_date.strftime("%Y-%m-%d")
