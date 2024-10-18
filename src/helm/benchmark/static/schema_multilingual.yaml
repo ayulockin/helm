@@ -664,8 +664,8 @@ run_groups:
 
   - name: mmlu_multilingual
     display_name: MMLU Multilingual (Massive Multitask Language Understanding)
-    short_display_name: MMLU
-    description: The Massive Multitask Language Understanding (MMLU) benchmark for knowledge-intensive question answering across 57 domains [(Hendrycks et al., 2021)](https://arxiv.org/pdf/2009.03300.pdf). This is the multilingual version of the benchmark.
+    short_display_name: MMMLU
+    description: The MMLU is a widely recognized benchmark of general knowledge attained by AI models. It covers a broad range of topics from 57 different categories, covering elementary-level knowledge up to advanced professional subjects like law, physics, history, and computer science. OpenAI translated the MMLU’s test set into 14 languages using professional human translators. [Dataset card](https://huggingface.co/datasets/openai/MMMLU)
     metric_groups:
       - accuracy
       - efficiency
@@ -676,45 +676,45 @@ run_groups:
     taxonomy:
       task: multiple-choice question answering
       what: math, science, history, etc.
-      who: University of Oregon
-      when: "2023"
+      who: OpenAI
+      when: "2024"
       language: Multilingual
 
-  - name: hellaswag_multilingual
-    display_name: Hellaswag Multilingual
-    short_display_name: Hellaswag
-    description: The HellaSwag benchmark for commonsense reasoning in question answering [(Zellers et al., 2019)](https://aclanthology.org/P19-1472/). This is the multilingual version of the benchmark.
-    metric_groups:
-      - accuracy
-      - efficiency
-      - general_information
-    environment:
-      main_name: exact_match
-      main_split: valid
-    taxonomy:
-      task: question answering
-      what: commonsense reasoning
-      who: University of Oregon
-      when: "2023"
-      language: Multilingual
+  # - name: hellaswag_multilingual
+  #   display_name: Hellaswag Multilingual
+  #   short_display_name: Hellaswag
+  #   description: The HellaSwag benchmark for commonsense reasoning in question answering [(Zellers et al., 2019)](https://aclanthology.org/P19-1472/). This is the multilingual version of the benchmark.
+  #   metric_groups:
+  #     - accuracy
+  #     - efficiency
+  #     - general_information
+  #   environment:
+  #     main_name: exact_match
+  #     main_split: valid
+  #   taxonomy:
+  #     task: question answering
+  #     what: commonsense reasoning
+  #     who: University of Oregon
+  #     when: "2023"
+  #     language: Multilingual
 
-  - name: arc_multilingual
-    display_name: AI2 Reasoning Challenge (ARC)
-    short_display_name: ARC 
-    description: The AI2 Reasoning Challenge (ARC) benchmark for question answering [(Clark et al., 2018)](https://arxiv.org/abs/1803.05457). This is the multilingual version of the benchmark.
-    metric_groups:
-      - accuracy
-      - efficiency
-      - general_information
-    environment:
-      main_name: exact_match
-      main_split: test
-    taxonomy:
-      task: multiple-choice question answering
-      what: math, science, history, etc.
-      who: University of Oregon
-      when: "2023"
-      language: Multilingual
+  # - name: arc_multilingual
+  #   display_name: AI2 Reasoning Challenge (ARC)
+  #   short_display_name: ARC 
+  #   description: The AI2 Reasoning Challenge (ARC) benchmark for question answering [(Clark et al., 2018)](https://arxiv.org/abs/1803.05457). This is the multilingual version of the benchmark.
+  #   metric_groups:
+  #     - accuracy
+  #     - efficiency
+  #     - general_information
+  #   environment:
+  #     main_name: exact_match
+  #     main_split: test
+  #   taxonomy:
+  #     task: multiple-choice question answering
+  #     what: math, science, history, etc.
+  #     who: University of Oregon
+  #     when: "2023"
+  #     language: Multilingual
 
   - name: mgsm
     display_name: Multilingual Grade School Math Benchmark (MGSM)
