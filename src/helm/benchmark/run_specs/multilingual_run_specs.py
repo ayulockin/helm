@@ -27,7 +27,6 @@ def get_mmlu_spec(subject: str, language: str, method: str = ADAPT_MULTIPLE_CHOI
         args={"subject": subject, "language": language},
     )
 
-    print("SPEC: ", INSTRUCTIONS[language].format(subject_translations_de.get(subject, subject)))
     adapter_spec = get_multiple_choice_adapter_spec(
         method=method,
         instructions=INSTRUCTIONS[language].format(subject_translations_de.get(subject, subject)),
@@ -52,12 +51,17 @@ def get_mgsm_spec(language: str, use_cot_prompt: bool = False, max_train_instanc
         args={"language": language, "use_cot_prompt": use_cot_prompt},
     )
 
+    max_tokens = 400
+    stop_sequences = [] # ["\n\n"] # Since answer may contain newlines, we use two as SEP
+    if use_cot_prompt:
+        max_tokens = 600
+        stop_sequences = []
     adapter_spec = get_generation_adapter_spec(
         input_noun="Q",
         output_noun="A",
         max_train_instances=max_train_instances,  # Due to limited context and long example length
-        max_tokens=400,  # The paper uses 400 tokens as the max sample length
-        stop_sequences=["\n\n"],  # Since answer may contain newlines, we use two as SEP
+        max_tokens=max_tokens,  # The paper uses 400 tokens as the max sample length
+        stop_sequences=stop_sequences,
     )
 
     return RunSpec(

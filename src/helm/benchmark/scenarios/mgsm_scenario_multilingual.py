@@ -62,7 +62,7 @@ class MGSMScenario(Scenario):
         self.language: str = language
         self.use_cot_prompt: bool = string_to_bool(use_cot_prompt)
 
-    def download_mmlu(self):
+    def download_mgsm(self):
         dataset_dict = datasets.load_dataset("juletxara/mgsm", self.language)
         assert isinstance(dataset_dict, datasets.DatasetDict)
         return dataset_dict
@@ -92,7 +92,7 @@ class MGSMScenario(Scenario):
 
     def get_instances(self, output_path: str) -> List[Instance]:
         # Download the raw data
-        dataset_dict = self.download_mmlu()
+        dataset_dict = self.download_mgsm()
 
         # Read all the instances
         instances: List[Instance] = []
