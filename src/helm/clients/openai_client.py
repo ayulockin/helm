@@ -190,6 +190,8 @@ class OpenAIClient(CachingClient):
             # "Invalid type for 'stop': expected an unsupported value, but got null instead."
             if raw_request["stop"] is None:
                 raw_request.pop("stop")
+            # temperature is set to 1 as default
+            raw_request["temperature"] = 1
 
         # Special handling for gpt-4o-audio-preview
         # See: https://platform.openai.com/docs/guides/audio

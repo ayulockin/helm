@@ -181,7 +181,7 @@ def main():
     model_metadata_dict = {model["display_name"]: model for model in model_metadata}
     print(model_metadata_dict.keys())
 
-    run = wandb.init(entity="wandb", project="de-llm-leaderboard", job_type="helm_eval")
+    # run = wandb.init(entity="wandb", project="de-llm-leaderboard", job_type="helm_eval")
 
     tables = get_group_tables(base_path, "multilingual_scenarios")
 
@@ -190,9 +190,9 @@ def main():
     efficiency_df = parse_efficiency_for_wandb(tables, model_metadata_dict)
     print(efficiency_df)
 
-    run.log(
-        {"accuracy_table": wandb.Table(dataframe=accuracy_df), "efficiency_table": wandb.Table(dataframe=efficiency_df)}
-    )
+    # run.log(
+    #     {"accuracy_table": wandb.Table(dataframe=accuracy_df), "efficiency_table": wandb.Table(dataframe=efficiency_df)}
+    # )
 
 
 if __name__ == "__main__":
